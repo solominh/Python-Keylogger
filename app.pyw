@@ -31,6 +31,8 @@ def OnKeyboardEvent(event):
 
     # print 'Ascii:', event.Ascii, chr(event.Ascii) #pressed value
 
+    """if typing in new window"""  
+    if(window_name != event.WindowName):  # if typing in new window
         if(line_buffer != ""):  # if line buffer is not empty
             line_buffer += '\n'
             # print to file: any non printed characters from old window
