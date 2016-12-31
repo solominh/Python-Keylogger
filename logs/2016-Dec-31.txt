@@ -1,0 +1,7 @@
+H
+
+-----WindowName: app.pyw - Python-Keylogger - Visual Studio Code
+L
+
+-----WindowName: 2016-Dec-31.txt - Python-Keylogger - Visual Studio Code
+LLLLL
